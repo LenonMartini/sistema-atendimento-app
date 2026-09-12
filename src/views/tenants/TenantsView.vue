@@ -48,7 +48,7 @@ onMounted(load);
     <div class="d-flex align-center mb-4">
       <h3 class="text-h6 font-weight-bold">Empresas</h3>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-plus" @click="router.push('/platform/tenants/new')">Novo tenant</v-btn>
+      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/platform/tenants/new')">Novo tenant</v-btn>
     </div>
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">

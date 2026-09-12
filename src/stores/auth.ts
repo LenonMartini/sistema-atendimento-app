@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', {
         email,
         tenantId: 'tenant-demo',
         tenantName: 'Empresa Demo',
-        roles: [{ name: 'admin_tenant', permissions: [] }],
+        roles: [{ name: 'admin_tenant', permissions: ['contacts.read', 'contacts.manage', 'companies.read', 'companies.manage', 'departments.read', 'departments.manage'] }],
         themePreference: 'dark',
       });
     },

@@ -16,8 +16,9 @@ export const navItems: NavItem[] = [
     title: 'Cadastros gerais',
     icon: 'mdi-folder-account-outline',
     children: [
-      { title: 'Contatos', icon: 'mdi-account-multiple-outline', to: '/contacts' },
-      { title: 'Setores e equipes', icon: 'mdi-office-building-outline', to: '/settings/departments' },
+      { title: 'Contatos', icon: 'mdi-account-multiple-outline', to: '/contacts', permission: 'contacts.read' },
+      { title: 'Empresas', icon: 'mdi-domain', to: '/companies', permission: 'companies.read' },
+      { title: 'Setores e equipes', icon: 'mdi-office-building-outline', to: '/settings/departments', permission: 'departments.read' },
     ],
   },
   {

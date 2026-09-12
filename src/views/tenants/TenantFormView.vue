@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import { tenantSchema } from '../../schemas/forms.schema';
 import { createTenant, getTenant, updateTenant } from '../../services/tenants.service';
 
+const { setValues, validate } = useForm({ validationSchema: toTypedSchema(tenantSchema) });
 const route = useRoute();
 const router = useRouter();
 
@@ -29,6 +33,9 @@ async function load() {
 }
 
 async function save() {
+  setValues(form.value as any);
+  const result = await validate();
+  if (!result.valid) { errorMessage.value = 'Revise os campos destacados antes de salvar.'; return; }
   saving.value = true;
   errorMessage.value = '';
   try {
@@ -64,7 +71,7 @@ onMounted(load);
     <v-card :loading="loading">
       <v-card-text>
         <v-text-field v-model="form.name" label="Nome" :readonly="isReadOnly" class="mb-2" />
-        <v-text-field v-model="form.slug" label="Slug" :disabled="isEditing" :readonly="isReadOnly" class="mb-2" />
+        <v-text-field v-model="form.slug" @update:model-value="form.slug = String($event).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')" label="Slug" :disabled="isEditing" :readonly="isReadOnly" class="mb-2" />
         <v-text-field v-model="form.timezone" label="Fuso horário" :readonly="isReadOnly" class="mb-2" />
 
         <v-switch
@@ -73,15 +80,15 @@ onMounted(load);
           :readonly="isReadOnly"
           true-value="active"
           false-value="inactive"
-          color="success"
+          color="primary"
           :label="form.status === 'active' ? 'Ativo' : 'Inativo'"
           hide-details
         />
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn variant="text" @click="router.push('/platform/tenants')">{{ isReadOnly ? 'Voltar' : 'Cancelar' }}</v-btn>
-        <v-btn v-if="!isReadOnly" color="primary" :loading="saving" @click="save">Salvar</v-btn>
+        <v-btn variant="outlined" @click="router.push('/platform/tenants')">{{ isReadOnly ? 'Voltar' : 'Cancelar' }}</v-btn>
+        <v-btn v-if="!isReadOnly" color="primary" variant="outlined" :loading="saving" @click="save">Salvar</v-btn>
       </v-card-actions>
     </v-card>
   </div>

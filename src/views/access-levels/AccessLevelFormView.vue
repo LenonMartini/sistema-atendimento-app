@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import { roleSchema } from '../../schemas/forms.schema';
 import { createRole, getRole, updateRole } from '../../services/roles.service';
 import { listPermissionsGrouped } from '../../services/permissions.service';
 import type { PermissionGroup } from '../../types/permission.types';
 import { translatePermissionModule } from '../../utils/permission-module-labels';
 
+const { setValues, validate } = useForm({ validationSchema: toTypedSchema(roleSchema) });
 const route = useRoute();
 const router = useRouter();
 
@@ -55,6 +59,9 @@ async function load() {
 }
 
 async function save() {
+  setValues(form.value as any);
+  const result = await validate();
+  if (!result.valid) { errorMessage.value = 'Revise os campos destacados antes de salvar.'; return; }
   saving.value = true;
   errorMessage.value = '';
   try {
@@ -101,6 +108,7 @@ onMounted(load);
           <v-expansion-panel v-for="group in permissionGroups" :key="group.module">
             <v-expansion-panel-title>
               <v-checkbox-btn
+                color="primary"
                 :model-value="isGroupFullyChecked(group)"
                 :indeterminate="isGroupPartiallyChecked(group)"
                 class="mr-2"
@@ -110,6 +118,7 @@ onMounted(load);
             </v-expansion-panel-title>
             <v-expansion-panel-text>
               <v-checkbox
+                color="primary"
                 v-for="permission in group.permissions"
                 :key="permission.id"
                 v-model="form.permissionIds"
@@ -124,8 +133,8 @@ onMounted(load);
       </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn variant="text" @click="router.push('/settings/access-levels')">Cancelar</v-btn>
-        <v-btn color="primary" :loading="saving" @click="save">Salvar</v-btn>
+        <v-btn variant="outlined" @click="router.push('/settings/access-levels')">Cancelar</v-btn>
+        <v-btn color="primary" variant="outlined" :loading="saving" @click="save">Salvar</v-btn>
       </v-card-actions>
     </v-card>
   </div>

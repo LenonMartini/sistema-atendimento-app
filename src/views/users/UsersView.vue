@@ -48,7 +48,7 @@ onMounted(load);
     <div class="d-flex align-center mb-4">
       <h1 class="text-h5 font-weight-bold">Usuários e papéis</h1>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-plus" @click="router.push('/settings/users/new')">Novo usuário</v-btn>
+      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/users/new')">Novo usuário</v-btn>
     </div>
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
@@ -75,6 +75,11 @@ onMounted(load);
             <v-list density="compact">
               <v-list-item prepend-icon="mdi-pencil-outline" title="Editar" @click="router.push(`/settings/users/${item.id}/edit`)" />
               <v-list-item prepend-icon="mdi-eye-outline" title="Visualizar" @click="router.push(`/settings/users/${item.id}/view`)" />
+              <v-list-item
+                prepend-icon="mdi-shield-account-outline"
+                title="Permissões"
+                @click="router.push(`/settings/users/${item.id}/permissions`)"
+              />
               <v-list-item prepend-icon="mdi-delete-outline" title="Excluir" base-color="error" @click="remove(item)" />
             </v-list>
           </v-menu>

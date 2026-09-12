@@ -47,7 +47,7 @@ onMounted(load);
     <div class="d-flex align-center mb-4">
       <h1 class="text-h5 font-weight-bold">Níveis de acesso</h1>
       <v-spacer />
-      <v-btn color="primary" prepend-icon="mdi-plus" @click="router.push('/settings/access-levels/new')">Novo grupo de acesso</v-btn>
+      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/access-levels/new')">Novo grupo de acesso</v-btn>
     </div>
 
     <p class="text-body-2 text-medium-emphasis mb-4">
@@ -74,15 +74,26 @@ onMounted(load);
           <v-chip v-else size="small" variant="tonal">Personalizado</v-chip>
         </template>
         <template #item.actions="{ item }">
-          <v-btn icon="mdi-pencil-outline" variant="text" size="small" @click="router.push(`/settings/access-levels/${item.id}/edit`)" />
-          <v-btn
-            v-if="!item.isSystem"
-            icon="mdi-delete-outline"
-            variant="text"
-            size="small"
-            @click="remove(item)"
-          />
-          <span v-else class="text-caption text-medium-emphasis ml-2">Sistema — não pode ser excluído</span>
+          <v-menu>
+            <template #activator="{ props }">
+              <v-btn icon="mdi-dots-vertical" variant="text" size="small" v-bind="props" />
+            </template>
+            <v-list density="compact">
+              <v-list-item
+                prepend-icon="mdi-pencil-outline"
+                title="Editar"
+                @click="router.push(`/settings/access-levels/${item.id}/edit`)"
+              />
+              <v-list-item
+                v-if="!item.isSystem"
+                prepend-icon="mdi-delete-outline"
+                title="Excluir"
+                base-color="error"
+                @click="remove(item)"
+              />
+              <v-list-item v-else prepend-icon="mdi-lock-outline" title="Não pode ser excluído" disabled />
+            </v-list>
+          </v-menu>
         </template>
       </v-data-table>
     </v-card>
