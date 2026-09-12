@@ -18,6 +18,7 @@ export const navItems: NavItem[] = [
     children: [
       { title: 'Contatos', icon: 'mdi-account-multiple-outline', to: '/contacts', permission: 'contacts.read' },
       { title: 'Empresas', icon: 'mdi-domain', to: '/companies', permission: 'companies.read' },
+      { title: 'Clientes e fornecedores', icon: 'mdi-handshake-outline', to: '/business-partners', permission: 'business_partners.read' },
       { title: 'Setores e equipes', icon: 'mdi-office-building-outline', to: '/settings/departments', permission: 'departments.read' },
     ],
   },
@@ -47,7 +48,7 @@ export const navItems: NavItem[] = [
     title: 'Configurações',
     icon: 'mdi-cog-outline',
     children: [
-      { title: 'Canais', icon: 'mdi-whatsapp', to: '/settings/channels' },
+      { title: 'Canais', icon: 'mdi-whatsapp', to: '/settings/channels', permission: 'channels.read' },
       { title: 'Usuários', icon: 'mdi-account-key-outline', to: '/settings/users', permission: 'users.read' },
       { title: 'Níveis de acesso', icon: 'mdi-shield-account-outline', to: '/settings/access-levels', permission: 'roles.read' },
       { title: 'Tenants', icon: 'mdi-office-building-cog-outline', to: '/platform/tenants', permission: 'tenants.read' },

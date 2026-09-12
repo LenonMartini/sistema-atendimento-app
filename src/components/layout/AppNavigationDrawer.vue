@@ -71,12 +71,15 @@ const openGroups = computed<string[]>({
 <template>
   <v-navigation-drawer v-model="ui.drawer" :rail="ui.rail" permanent color="surface" class="border-e">
     <div class="d-flex align-center pa-3" style="height: 64px">
-      <v-avatar color="primary" size="32" class="mr-2">
-        <v-icon icon="mdi-headset" size="18" color="white" />
-      </v-avatar>
-      <span v-if="!ui.rail" class="text-subtitle-1 font-weight-bold">Atendimento</span>
-      <v-spacer />
-      <v-btn v-if="!ui.rail" icon="mdi-chevron-left" variant="text" size="small" @click="ui.toggleRail()" />
+      <template v-if="!ui.rail">
+        <v-avatar color="primary" size="32" class="mr-2">
+          <v-icon icon="mdi-headset" size="18" color="white" />
+        </v-avatar>
+        <span class="text-subtitle-1 font-weight-bold">Atendimento</span>
+        <v-spacer />
+        <v-btn icon="mdi-chevron-left" variant="text" size="small" @click="ui.toggleRail()" />
+      </template>
+      <v-btn v-else icon="mdi-chevron-right" variant="text" size="small" class="mx-auto" @click="ui.toggleRail()" />
     </div>
 
     <div v-if="!ui.rail" class="px-3 pb-2">

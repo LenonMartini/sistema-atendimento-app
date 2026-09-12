@@ -8,6 +8,7 @@ import { createRole, getRole, updateRole } from '../../services/roles.service';
 import { listPermissionsGrouped } from '../../services/permissions.service';
 import type { PermissionGroup } from '../../types/permission.types';
 import { translatePermissionModule } from '../../utils/permission-module-labels';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const { setValues, validate } = useForm({ validationSchema: toTypedSchema(roleSchema) });
 const route = useRoute();
@@ -84,10 +85,7 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <v-btn icon="mdi-arrow-left" variant="text" class="mr-2" @click="router.push('/settings/access-levels')" />
-      <h1 class="text-h5 font-weight-bold">{{ isEditing ? 'Editar grupo de acesso' : 'Novo grupo de acesso' }}</h1>
-    </div>
+    <PageHeader :title="isEditing ? 'Editar grupo de acesso' : 'Novo grupo de acesso'" back-to="/settings/access-levels" />
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}

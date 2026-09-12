@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { listRoles, removeRole } from '../../services/roles.service';
 import type { AssignableRole } from '../../types/role.types';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const router = useRouter();
 const roles = ref<AssignableRole[]>([]);
@@ -44,11 +45,11 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <h1 class="text-h5 font-weight-bold">Níveis de acesso</h1>
-      <v-spacer />
-      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/access-levels/new')">Novo grupo de acesso</v-btn>
-    </div>
+    <PageHeader title="Níveis de acesso">
+      <template #actions>
+        <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/access-levels/new')">Novo grupo de acesso</v-btn>
+      </template>
+    </PageHeader>
 
     <p class="text-body-2 text-medium-emphasis mb-4">
       Um grupo de acesso reúne uma ou mais permissões e pode ser atribuído a vários usuários — ex.: um usuário pode

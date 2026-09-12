@@ -25,6 +25,9 @@ const MODULE_LABELS: Record<string, string> = {
   tenants: 'Tenants (plataforma)',
   users: 'Usuários',
   roles: 'Níveis de acesso',
+  companies: 'Empresas',
+  contacts: 'Contatos',
+  business_partners: 'Clientes e fornecedores',
 };
 
 export function translatePermissionModule(module: string): string {

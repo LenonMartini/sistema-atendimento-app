@@ -5,6 +5,7 @@ import { listRoles } from '../../services/roles.service';
 import { getUser, updateUser } from '../../services/users.service';
 import type { AssignableRole } from '../../types/role.types';
 import type { ManagedUser } from '../../types/user.types';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -52,13 +53,7 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <v-btn icon="mdi-arrow-left" variant="text" class="mr-2" @click="router.push('/settings/users')" />
-      <div>
-        <h1 class="text-h5 font-weight-bold">Permissões do usuário</h1>
-        <div v-if="user" class="text-body-2 text-medium-emphasis">{{ user.name }} · {{ user.email }}</div>
-      </div>
-    </div>
+    <PageHeader title="Permissões do usuário" :subtitle="user ? `${user.name} · ${user.email}` : undefined" back-to="/settings/users" />
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}

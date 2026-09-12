@@ -5,6 +5,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { tenantSchema } from '../../schemas/forms.schema';
 import { createTenant, getTenant, updateTenant } from '../../services/tenants.service';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const { setValues, validate } = useForm({ validationSchema: toTypedSchema(tenantSchema) });
 const route = useRoute();
@@ -57,12 +58,7 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <v-btn icon="mdi-arrow-left" variant="text" class="mr-2" @click="router.push('/platform/tenants')" />
-      <h5 class="text-h6 font-weight-bold">
-        {{ isReadOnly ? 'Visualizar tenant' : isEditing ? 'Editar tenant' : 'Novo tenant' }}
-      </h5>
-    </div>
+    <PageHeader :title="isReadOnly ? 'Visualizar tenant' : isEditing ? 'Editar tenant' : 'Novo tenant'" back-to="/platform/tenants" />
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}

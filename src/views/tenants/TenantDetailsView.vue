@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { getTenant } from '../../services/tenants.service';
 import type { Tenant } from '../../types/tenant.types';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -34,23 +35,19 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <v-btn icon="mdi-arrow-left" variant="text" class="mr-2" @click="router.push('/platform/tenants')" />
-      <div>
-        <h1 class="text-h5 font-weight-bold">Detalhes do tenant</h1>
-        <p v-if="tenant" class="text-body-2 text-medium-emphasis mb-0">{{ tenant.name }}</p>
-      </div>
-      <v-spacer />
-      <v-btn
-        v-if="tenant"
-        color="primary"
-        variant="outlined"
-        prepend-icon="mdi-pencil-outline"
-        @click="router.push(`/platform/tenants/${tenant.id}/edit`)"
-      >
-        Editar
-      </v-btn>
-    </div>
+    <PageHeader title="Detalhes do tenant" :subtitle="tenant?.name" back-to="/platform/tenants">
+      <template #actions>
+        <v-btn
+          v-if="tenant"
+          color="primary"
+          variant="outlined"
+          prepend-icon="mdi-pencil-outline"
+          @click="router.push(`/platform/tenants/${tenant.id}/edit`)"
+        >
+          Editar
+        </v-btn>
+      </template>
+    </PageHeader>
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}

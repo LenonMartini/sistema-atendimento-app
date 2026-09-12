@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { listTenants, removeTenant } from '../../services/tenants.service';
 import type { Tenant } from '../../types/tenant.types';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const router = useRouter();
 const tenants = ref<Tenant[]>([]);
@@ -45,11 +46,11 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <h3 class="text-h6 font-weight-bold">Empresas</h3>
-      <v-spacer />
-      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/platform/tenants/new')">Novo tenant</v-btn>
-    </div>
+    <PageHeader title="Tenants">
+      <template #actions>
+        <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/platform/tenants/new')">Novo tenant</v-btn>
+      </template>
+    </PageHeader>
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}

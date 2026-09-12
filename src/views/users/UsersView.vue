@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { listUsers, removeUser } from '../../services/users.service';
 import type { ManagedUser } from '../../types/user.types';
+import PageHeader from '../../components/common/PageHeader.vue';
 
 const router = useRouter();
 const users = ref<ManagedUser[]>([]);
@@ -45,11 +46,11 @@ onMounted(load);
 
 <template>
   <div>
-    <div class="d-flex align-center mb-4">
-      <h1 class="text-h5 font-weight-bold">Usuários e papéis</h1>
-      <v-spacer />
-      <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/users/new')">Novo usuário</v-btn>
-    </div>
+    <PageHeader title="Usuários e papéis">
+      <template #actions>
+        <v-btn color="primary" variant="outlined" prepend-icon="mdi-plus" @click="router.push('/settings/users/new')">Novo usuário</v-btn>
+      </template>
+    </PageHeader>
 
     <v-alert v-if="errorMessage" type="error" density="compact" class="mb-4" closable @click:close="errorMessage = ''">
       {{ errorMessage }}
